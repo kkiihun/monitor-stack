@@ -1,0 +1,13 @@
+# Uptime Kuma data (DO NOT COMMIT)
+uptime-kuma/
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+logs/
+
+# misc
+.DS_Store
