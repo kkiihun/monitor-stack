@@ -1,0 +1,42 @@
+services:
+  mariadb:
+    image: mariadb:11
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpass
+      MARIADB_DATABASE: sool
+      MARIADB_USER: sool
+      MARIADB_PASSWORD: soolpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+    environment:
+      MB_DB_TYPE: mysql
+      MB_DB_DBNAME: sool
+      MB_DB_PORT: 3306
+      MB_DB_USER: sool
+      MB_DB_PASS: soolpass
+      MB_DB_HOST: mariadb
+    depends_on:
+      - mariadb
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+
+volumes:
+  mariadb_data:
